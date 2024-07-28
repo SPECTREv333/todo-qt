@@ -12,11 +12,18 @@
 class TodoList : public Subject{
 public:
 
-    void addTodo(Todo todo);
+    void addTodo(const Todo& todo);
 
     const std::vector <Todo> &getTodos() const;
 
+    void addObserver(Observer *observer) override;
+
+    void removeObserver(Observer *observer) override;
+
+    void notify() override;
+
 private:
+    std::list<Observer *> observers;
     std::vector<Todo> todos;
 
 };
