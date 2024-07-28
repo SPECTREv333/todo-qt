@@ -6,7 +6,8 @@
 #include "TodoWidget.h"
 
 void TodoWidget::update() {
-    // TODO: update the widget
+    label->setText(todo->getDescription().c_str());
+    checkBox->setChecked(todo->isDone());
 }
 
 TodoWidget::TodoWidget(QWidget *parent, Todo *todo, TodoController *controller)
