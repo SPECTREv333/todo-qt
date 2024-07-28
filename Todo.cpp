@@ -2,6 +2,7 @@
 // Created by leonardo on 28/07/24.
 //
 
+#include <iostream>
 #include "Todo.h"
 
 const std::string &Todo::getDescription() const {
@@ -10,6 +11,7 @@ const std::string &Todo::getDescription() const {
 
 void Todo::setDescription(const std::string &desc) {
     Todo::description = desc;
+    notify();
 }
 
 bool Todo::isDone() const {
@@ -18,6 +20,7 @@ bool Todo::isDone() const {
 
 void Todo::setDone(bool done) {
     Todo::done = done;
+    notify();
 }
 
 void Todo::addObserver(Observer *observer) {

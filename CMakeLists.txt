@@ -19,7 +19,12 @@ add_executable(todo main.cpp
         TodoList.cpp
         TodoList.h
         Observer.h
-        Subject.h)
+        Subject.h
+        TodoWidget.cpp
+        TodoWidget.h
+        TodoController.cpp
+        TodoController.h
+)
 target_link_libraries(todo
         Qt::Core
         Qt::Gui

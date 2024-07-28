@@ -1,25 +1,24 @@
 #include <QApplication>
 #include <QPushButton>
 #include <iostream>
+#include <QMainWindow>
 #include "TodoList.h"
+#include "TodoController.h"
+#include "TodoWidget.h"
+#include "TestWidget.h"
 
 int main(int argc, char *argv[]) {
-//    QApplication a(argc, argv);
-//    QPushButton button("Hello world!", nullptr);
-//    button.resize(200, 100);
-//    button.show();
-//    return QApplication::exec();
+    QApplication a(argc, argv);
 
-    TodoList list;
-
-    list.addTodo({"Buy milk", false});
-    list.addTodo({"Buy bread", true});
-    list.addTodo({"Buy butter", false});
-
-    for (const auto& todo : list.getTodos()) {
-        std::cout << (todo.isDone() ? "[x]" : "[ ]") << todo.getDescription() << std::endl;
-    }
+    Todo todo1("Buy milk", false);
+    TodoController controller(&todo1);
+    TodoWidget widget(nullptr, &todo1, &controller);
+    widget.show();
 
 
-    return 0;
+
+    return QApplication::exec();
+
+
+
 }
