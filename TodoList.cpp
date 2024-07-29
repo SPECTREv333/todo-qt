@@ -2,6 +2,7 @@
 // Created by leonardo on 28/07/24.
 //
 
+#include <algorithm>
 #include "TodoList.h"
 
 const std::vector<Todo> &TodoList::getTodos() const {
@@ -23,5 +24,16 @@ void TodoList::removeObserver(Observer *observer) {
 void TodoList::notify() {
     for (auto observer : observers) {
         observer->update();
+    }
+}
+
+std::vector<Todo> &TodoList::getTodos() {
+    return todos;
+}
+
+void TodoList::removeTodo(Todo &todo) {
+    auto iter = std::find(todos.begin(), todos.end(), todo);
+    if (iter != todos.end()) {
+        todos.erase(iter);
     }
 }

@@ -9,17 +9,22 @@
 #include <QWidget>
 #include <QLabel>
 #include <QCheckBox>
+#include <QListWidgetItem>
 #include "Observer.h"
 #include "Todo.h"
-#include "TodoController.h"
+#include "Controller.h"
 
-class TodoWidget : public QWidget, public Observer {
+class TodoWidget : public QListWidgetItem, public Observer {
 Q_OBJECT
 
 public:
 
-    TodoWidget(QWidget *parent, Todo *todo, TodoController *controller);
+    TodoWidget(QListWidget *parent, Todo *todo, Controller *controller);
     ~TodoWidget() override;
+
+    Todo *getTodo() const;
+
+    void setTodo(Todo *todo);
 
     void update() override;
 
@@ -28,9 +33,10 @@ public slots:
 
 private:
     Todo *todo;
-    TodoController *controller;
+    Controller *controller;
     QLabel *label;
     QCheckBox *checkBox;
+    QHBoxLayout *layout;
 
 };
 

@@ -36,3 +36,11 @@ void Todo::notify() {
         observer->update();
     }
 }
+
+bool Todo::operator==(const Todo &rhs) const {
+    return description == rhs.description && done == rhs.done;
+}
+
+bool Todo::operator!=(const Todo &rhs) const {
+    return !(rhs == *this);
+}

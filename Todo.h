@@ -12,6 +12,8 @@
 
 class Todo : public Subject {
 public:
+    Todo(const Todo &todo) : description(todo.description), done(todo.done) {}
+
     Todo(std::string desc, bool done) : description(desc), done(done) {}
 
     const std::string &getDescription() const;
@@ -27,6 +29,10 @@ public:
     void removeObserver(Observer *observer) override;
 
     void notify() override;
+
+    bool operator==(const Todo &rhs) const;
+
+    bool operator!=(const Todo &rhs) const;
 
 
 private:

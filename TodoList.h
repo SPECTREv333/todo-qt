@@ -14,7 +14,11 @@ public:
 
     void addTodo(const Todo& todo);
 
+    void removeTodo(Todo &todo);
+
     const std::vector <Todo> &getTodos() const;
+
+    std::vector <Todo> &getTodos();
 
     void addObserver(Observer *observer) override;
 
