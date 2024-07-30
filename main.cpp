@@ -1,23 +1,21 @@
 #include <QApplication>
 #include <QPushButton>
-#include <iostream>
 #include <QMainWindow>
 #include "TodoList.h"
 #include "Controller.h"
 #include "TodoWidget.h"
+#include "TodoListWidget.h"
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
-    Todo todo1("Buy milk", false);
-    Controller controller(&todo1);
-    TodoWidget widget(nullptr, &todo1, &controller);
-    widget.show();
+    TodoList todoList;
+    Controller controller(&todoList);
+    TodoListWidget todoListWidget(nullptr, &todoList, &controller);
 
 
+
+    todoListWidget.show();
 
     return QApplication::exec();
-
-
-
 }

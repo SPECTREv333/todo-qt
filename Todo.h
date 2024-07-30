@@ -12,9 +12,15 @@
 
 class Todo : public Subject {
 public:
+    Todo() = default;
+
     Todo(const Todo &todo) : description(todo.description), done(todo.done) {}
 
-    Todo(std::string desc, bool done) : description(desc), done(done) {}
+    Todo(std::string title, std::string desc, bool done) : title(title), description(desc), done(done) {}
+
+    const std::string &getTitle() const;
+
+    void setTitle(const std::string &title);
 
     const std::string &getDescription() const;
 
@@ -37,6 +43,7 @@ public:
 
 private:
     std::list<Observer *> observers;
+    std::string title;
     std::string description;
     bool done;
 

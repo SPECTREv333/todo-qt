@@ -2,7 +2,6 @@
 // Created by leonardo on 28/07/24.
 //
 
-#include <iostream>
 #include "Todo.h"
 
 const std::string &Todo::getDescription() const {
@@ -19,7 +18,7 @@ bool Todo::isDone() const {
 }
 
 void Todo::setDone(bool done) {
-    Todo::done = done;
+    this->done = done;
     notify();
 }
 
@@ -43,4 +42,13 @@ bool Todo::operator==(const Todo &rhs) const {
 
 bool Todo::operator!=(const Todo &rhs) const {
     return !(rhs == *this);
+}
+
+const std::string &Todo::getTitle() const {
+    return title;
+}
+
+void Todo::setTitle(const std::string &title) {
+    Todo::title = title;
+    notify();
 }

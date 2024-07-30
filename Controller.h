@@ -8,21 +8,15 @@
 
 #include "Todo.h"
 #include "TodoList.h"
-#include "TodoWidget.h"
-
 
 class Controller {
 public:
 
     explicit Controller(TodoList *todolist) : todolist(todolist) {};
 
-    void setDescription(Todo &todo, const std::string &desc);
-
-    void setDone(Todo &todo, bool done);
-
     void addTodo();
 
-    void removeTodo(TodoWidget *pWidget);
+    void removeTodo(std::shared_ptr<Todo> todo);
 
 private:
     TodoList *todolist;

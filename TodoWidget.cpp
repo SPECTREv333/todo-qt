@@ -3,40 +3,74 @@
 //
 
 #include <QHBoxLayout>
+#include <QPushButton>
 #include "TodoWidget.h"
+#include "TodoEditDialog.h"
 
-void TodoWidget::update() {
-    label->setText(todo->getDescription().c_str());
-    checkBox->setChecked(todo->isDone());
-}
+TodoWidget::TodoWidget(QWidget *parent, std::shared_ptr<Todo> todo, Controller *controller)
+        : QWidget(parent), todo(std::move(todo)), controller(controller) {
 
-TodoWidget::TodoWidget(QListWidget *parent, Todo *todo, Controller *controller)
-        : QListWidgetItem(parent), todo(todo), controller(controller) {
+    this->todo->addObserver(this);
+    setLayout(new QHBoxLayout(this));
 
-    todo->addObserver(this);
-    layout = new QHBoxLayout(nullptr);
-    checkBox = new QCheckBox(nullptr);
-    checkBox->setChecked(todo->isDone());
-    label = new QLabel(todo->getDescription().c_str(), nullptr);
-    layout->addWidget(label);
-    layout->addWidget(checkBox);
+    auto* tickableLabel = new QWidget(this);
+    auto* tickableLabelLayout = new QHBoxLayout(tickableLabel);
+    tickableLabelLayout->setAlignment(Qt::AlignLeft);
+    checkBox = new QCheckBox(this);
+    checkBox->setChecked(this->todo->isDone());
+    label = new QLabel(this->todo->getTitle().c_str(), this);
+    tickableLabelLayout->addWidget(checkBox);
+    tickableLabelLayout->addWidget(label);
+
+    auto* buttonBar = new QWidget(this);
+    auto* buttonBarLayout = new QHBoxLayout(buttonBar);
+    buttonBarLayout->setAlignment(Qt::AlignRight);
+
+    auto *deleteButton = new QPushButton("Delete", this);
+    buttonBarLayout->addWidget(deleteButton);
+
+    auto *editButton = new QPushButton("Edit", this);
+    buttonBarLayout->addWidget(editButton);
+
+
+    layout()->addWidget(tickableLabel);
+    layout()->addWidget(buttonBar);
+    layout()->setContentsMargins(0, 0, 0, 0);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+
     connect(checkBox, &QCheckBox::stateChanged, this, &TodoWidget::todoChanged);
+    connect(deleteButton, &QPushButton::clicked, this, &TodoWidget::removeTodo);
+    connect(editButton, &QPushButton::clicked, this, &TodoWidget::editTodo);
 
 }
 
 TodoWidget::~TodoWidget() {
     todo->removeObserver(this);
-
 }
 
 void TodoWidget::todoChanged() {
-    controller->setDone(checkBox->isChecked());
+    todo->setDone(checkBox->isChecked());
 }
 
-Todo *TodoWidget::getTodo() const {
+std::shared_ptr<Todo> TodoWidget::getTodo() const {
     return todo;
 }
 
-void TodoWidget::setTodo(Todo *todo) {
-    TodoWidget::todo = todo;
+void TodoWidget::setTodo(std::shared_ptr<Todo> todo) {
+    this->todo = std::move(todo);
 }
+
+void TodoWidget::removeTodo() {
+    controller->removeTodo(todo);
+}
+
+void TodoWidget::update() {
+    label->setText(todo->getTitle().c_str());
+    checkBox->setChecked(todo->isDone());
+}
+
+void TodoWidget::editTodo() {
+    TodoEditDialog dialog(todo);
+    dialog.exec();
+}
+

@@ -8,6 +8,9 @@
 
 #include <QWidget>
 #include <QListWidget>
+#include <QScrollArea>
+#include <QVBoxLayout>
+#include "TodoWidget.h"
 #include "Observer.h"
 #include "TodoList.h"
 #include "Controller.h"
@@ -25,13 +28,11 @@ public slots:
 
     void addTodo();
 
-    void removeTodo();
-
-
 private:
     TodoList* todoList;
-    QListWidget *listWidget;
     Controller *controller;
+    QWidget *scrollAreaContent;
+    std::list<TodoWidget*> todoWidgets;
 
 
 

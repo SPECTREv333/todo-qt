@@ -7,18 +7,19 @@
 
 
 #include <vector>
+#include <memory>
 #include "Todo.h"
 
 class TodoList : public Subject{
 public:
 
-    void addTodo(const Todo& todo);
+    void addTodo(std::shared_ptr<Todo> todo);
 
-    void removeTodo(Todo &todo);
+    void removeTodo(std::shared_ptr<Todo> todo);
 
-    const std::vector <Todo> &getTodos() const;
+    const std::list<std::shared_ptr<Todo>> &getTodos() const;
 
-    std::vector <Todo> &getTodos();
+    std::list<std::shared_ptr<Todo>> &getTodos();
 
     void addObserver(Observer *observer) override;
 
@@ -28,7 +29,7 @@ public:
 
 private:
     std::list<Observer *> observers;
-    std::vector<Todo> todos;
+    std::list<std::shared_ptr<Todo>> todos;
 
 };
 

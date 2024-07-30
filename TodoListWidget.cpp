@@ -17,32 +17,43 @@ TodoListWidget::TodoListWidget(QWidget *parent, TodoList *todoList, Controller *
     todoList->addObserver(this);
 
     auto *layout = new QGridLayout(this);
-    listWidget = new QListWidget(this);
-    layout->addWidget(listWidget, 0, 0, 1, 2);
+    setLayout(layout);
+
+    auto *scrollArea = new QScrollArea(this);
+    scrollArea->setBackgroundRole(QPalette::Window);
+    scrollArea->setFrameShadow(QFrame::Plain);
+    scrollArea->setFrameShape(QFrame::NoFrame);
+    scrollArea->setWidgetResizable(true);
+
+    scrollAreaContent = new QWidget(this);
+    scrollAreaContent->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    scrollAreaContent->setLayout(new QVBoxLayout(scrollAreaContent));
+    scrollAreaContent->layout()->setAlignment(Qt::AlignTop);
+    scrollArea->setWidget(scrollAreaContent);
+
+    layout->addWidget(scrollArea, 0, 0);
+
     auto *addButton = new QPushButton("Add", this);
     layout->addWidget(addButton, 1, 0);
-    auto *removeButton = new QPushButton("Remove", this);
-    layout->addWidget(removeButton, 1, 1);
+
+    connect(addButton, &QPushButton::clicked, this, &TodoListWidget::addTodo);
 
 }
 
 void TodoListWidget::update() {
-    listWidget->clear();
-    for (auto &todo : todoList->getTodos()) {
-        auto *todoWidget = new TodoWidget(listWidget, &todo, controller);
-        listWidget->addItem(todoWidget);
+    for (auto todoWidget : todoWidgets) {
+        delete todoWidget;
+    }
+    todoWidgets.clear();
 
+    for (const auto& todo : todoList->getTodos()) {
+        auto *todoWidget = new TodoWidget(scrollAreaContent, todo, controller);
+        todoWidgets.push_back(todoWidget);
+        scrollAreaContent->layout()->addWidget(todoWidget);
     }
 }
 
 void TodoListWidget::addTodo() {
     controller->addTodo();
-
 }
 
-void TodoListWidget::removeTodo() {
-    TodoWidget* widget = dynamic_cast<TodoWidget *>(listWidget->selectedItems().first()); // TODO: handle multiple selection
-    if (widget != nullptr) {
-        controller->removeTodo(widget);
-    }
-}

@@ -5,12 +5,13 @@
 #include <algorithm>
 #include "TodoList.h"
 
-const std::vector<Todo> &TodoList::getTodos() const {
+const std::list<std::shared_ptr<Todo>> &TodoList::getTodos() const {
     return todos;
 }
 
-void TodoList::addTodo(const Todo& todo) {
+void TodoList::addTodo(std::shared_ptr<Todo> todo) {
     todos.push_back(todo);
+    notify();
 }
 
 void TodoList::addObserver(Observer *observer) {
@@ -27,13 +28,12 @@ void TodoList::notify() {
     }
 }
 
-std::vector<Todo> &TodoList::getTodos() {
+void TodoList::removeTodo(std::shared_ptr<Todo> todo) {
+    todos.remove(todo);
+    notify();
+}
+
+std::list<std::shared_ptr<Todo>> &TodoList::getTodos() {
     return todos;
 }
 
-void TodoList::removeTodo(Todo &todo) {
-    auto iter = std::find(todos.begin(), todos.end(), todo);
-    if (iter != todos.end()) {
-        todos.erase(iter);
-    }
-}
