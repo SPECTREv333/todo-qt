@@ -4,11 +4,11 @@
 
 #include "Todo.h"
 
-const std::string &Todo::getDescription() const {
+const QString & Todo::getDescription() const {
     return description;
 }
 
-void Todo::setDescription(const std::string &desc) {
+void Todo::setDescription(const QString &desc) {
     Todo::description = desc;
     notify();
 }
@@ -18,7 +18,7 @@ bool Todo::isDone() const {
 }
 
 void Todo::setDone(bool done) {
-    this->done = done;
+    Todo::done = done;
     notify();
 }
 
@@ -44,11 +44,11 @@ bool Todo::operator!=(const Todo &rhs) const {
     return !(rhs == *this);
 }
 
-const std::string &Todo::getTitle() const {
+const QString & Todo::getTitle() const {
     return title;
 }
 
-void Todo::setTitle(const std::string &title) {
+void Todo::setTitle(const QString &title) {
     Todo::title = title;
     notify();
 }

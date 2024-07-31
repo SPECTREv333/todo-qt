@@ -10,15 +10,15 @@
 TodoWidget::TodoWidget(QWidget *parent, std::shared_ptr<Todo> todo, Controller *controller)
         : QWidget(parent), todo(std::move(todo)), controller(controller) {
 
-    this->todo->addObserver(this);
+    TodoWidget::todo->addObserver(this);
     setLayout(new QHBoxLayout(this));
 
     auto* tickableLabel = new QWidget(this);
     auto* tickableLabelLayout = new QHBoxLayout(tickableLabel);
     tickableLabelLayout->setAlignment(Qt::AlignLeft);
     checkBox = new QCheckBox(this);
-    checkBox->setChecked(this->todo->isDone());
-    label = new QLabel(this->todo->getTitle().c_str(), this);
+    checkBox->setChecked(TodoWidget::todo->isDone());
+    label = new QLabel(TodoWidget::todo->getTitle(), this);
     tickableLabelLayout->addWidget(checkBox);
     tickableLabelLayout->addWidget(label);
 
@@ -57,7 +57,7 @@ std::shared_ptr<Todo> TodoWidget::getTodo() const {
 }
 
 void TodoWidget::setTodo(std::shared_ptr<Todo> todo) {
-    this->todo = std::move(todo);
+    TodoWidget::todo = std::move(todo);
 }
 
 void TodoWidget::removeTodo() {
@@ -65,7 +65,7 @@ void TodoWidget::removeTodo() {
 }
 
 void TodoWidget::update() {
-    label->setText(todo->getTitle().c_str());
+    label->setText(todo->getTitle());
     checkBox->setChecked(todo->isDone());
 }
 

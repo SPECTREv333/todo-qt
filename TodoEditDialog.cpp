@@ -14,30 +14,30 @@ TodoEditDialog::TodoEditDialog(std::shared_ptr<Todo> todo, QWidget *parent)
     // Creazione dei widget
     QLabel *titleLabel = new QLabel("Titolo:");
     titleEdit = new QLineEdit(this);
-    titleEdit->setText(todo->getTitle().c_str());
+    titleEdit->setText(todo->getTitle());
 
     QLabel *descriptionLabel = new QLabel("Descrizione:");
     descriptionEdit = new QTextEdit(this);
-    descriptionEdit->setText(todo->getDescription().c_str());
+    descriptionEdit->setText(todo->getDescription());
 
     okButton = new QPushButton("OK");
     cancelButton = new QPushButton("Annulla");
 
     // Layout
-    QHBoxLayout *titleLayout = new QHBoxLayout;
+    auto *titleLayout = new QHBoxLayout;
     titleLayout->addWidget(titleLabel);
     titleLayout->addWidget(titleEdit);
 
-    QVBoxLayout *descriptionLayout = new QVBoxLayout;
+    auto *descriptionLayout = new QVBoxLayout;
     descriptionLayout->addWidget(descriptionLabel);
     descriptionLayout->addWidget(descriptionEdit);
 
-    QHBoxLayout *buttonsLayout = new QHBoxLayout;
+    auto *buttonsLayout = new QHBoxLayout;
     buttonsLayout->addStretch(1);
     buttonsLayout->addWidget(okButton);
     buttonsLayout->addWidget(cancelButton);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    auto *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(titleLayout);
     mainLayout->addLayout(descriptionLayout);
     mainLayout->addLayout(buttonsLayout);
@@ -60,9 +60,8 @@ void TodoEditDialog::accept() {
         return;
     }
 
-    // TODO: use QString everywhere, its just painful to convert back and forth
-    todo->setTitle(titleEdit->text().toStdString());
-    todo->setDescription(descriptionEdit->toPlainText().toStdString());
+    todo->setTitle(titleEdit->text());
+    todo->setDescription(descriptionEdit->toPlainText());
 
     QDialog::accept();
 }

@@ -8,6 +8,7 @@
 
 #include <string>
 #include <list>
+#include <qstring.h>
 #include "Subject.h"
 
 class Todo : public Subject {
@@ -16,15 +17,15 @@ public:
 
     Todo(const Todo &todo) : description(todo.description), done(todo.done) {}
 
-    Todo(std::string title, std::string desc, bool done) : title(title), description(desc), done(done) {}
+    Todo(const QString &title, const QString &desc, bool done) : title(title), description(desc), done(done) {}
 
-    const std::string &getTitle() const;
+    const QString & getTitle() const;
 
-    void setTitle(const std::string &title);
+    void setTitle(const QString &title);
 
-    const std::string &getDescription() const;
+    const QString & getDescription() const;
 
-    void setDescription(const std::string &desc);
+    void setDescription(const QString &desc);
 
     bool isDone() const;
 
@@ -43,9 +44,9 @@ public:
 
 private:
     std::list<Observer *> observers;
-    std::string title;
-    std::string description;
-    bool done;
+    QString title;
+    QString description;
+    bool done = false;
 
 };
 

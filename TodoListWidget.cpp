@@ -12,8 +12,8 @@ TodoListWidget::~TodoListWidget() {
 }
 
 TodoListWidget::TodoListWidget(QWidget *parent, TodoList *todoList, Controller *controller) : QWidget(parent) {
-    this->todoList = todoList;
-    this->controller = controller;
+    TodoListWidget::todoList = todoList;
+    TodoListWidget::controller = controller;
     todoList->addObserver(this);
 
     auto *layout = new QGridLayout(this);
