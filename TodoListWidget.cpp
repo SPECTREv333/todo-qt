@@ -33,11 +33,6 @@ TodoListWidget::TodoListWidget(QWidget *parent, TodoList *todoList, Controller *
 
     layout->addWidget(scrollArea, 0, 0);
 
-    auto *addButton = new QPushButton("Add", this);
-    layout->addWidget(addButton, 1, 0);
-
-    connect(addButton, &QPushButton::clicked, this, &TodoListWidget::addTodo);
-
 }
 
 void TodoListWidget::update() {
@@ -51,9 +46,5 @@ void TodoListWidget::update() {
         todoWidgets.push_back(todoWidget);
         scrollAreaContent->layout()->addWidget(todoWidget);
     }
-}
-
-void TodoListWidget::addTodo() {
-    controller->addTodo();
 }
 

@@ -24,10 +24,6 @@ public:
 
     void update() override;
 
-public slots:
-
-    void addTodo();
-
 private:
     TodoList* todoList;
     Controller *controller;

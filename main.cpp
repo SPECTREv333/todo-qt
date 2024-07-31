@@ -8,17 +8,16 @@
 #include "Todo.h"
 #include <memory>
 #include <iostream>
+#include "MainWindow.h"
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
     TodoList todoList;
     Controller controller(&todoList);
-    TodoListWidget todoListWidget(nullptr, &todoList, &controller);
+    MainWindow mainWindow(&todoList, &controller);
+    mainWindow.show();
 
-
-
-    todoListWidget.show();
 
     return QApplication::exec();
 }
