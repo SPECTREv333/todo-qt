@@ -28,6 +28,7 @@ add_executable(todo main.cpp
         TodoListWidget.h
         TodoEditDialog.cpp
         TodoEditDialog.h
+        Serializable.h
 )
 target_link_libraries(todo
         Qt::Core

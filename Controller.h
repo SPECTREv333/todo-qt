@@ -18,6 +18,10 @@ public:
 
     void removeTodo(std::shared_ptr<Todo> todo);
 
+    void saveToFile(const QString &path);
+
+    void loadFromFile(const QString &path);
+
 private:
     TodoList *todolist;
 

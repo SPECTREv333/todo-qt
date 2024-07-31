@@ -2,6 +2,8 @@
 // Created by leonardo on 28/07/24.
 //
 
+#include <QDataStream>
+#include <QIODevice>
 #include "Todo.h"
 
 const QString & Todo::getDescription() const {
@@ -27,7 +29,7 @@ void Todo::addObserver(Observer *observer) {
 }
 
 void Todo::removeObserver(Observer *observer) {
-    observers.remove(observer);
+    observers.removeOne(observer);
 }
 
 void Todo::notify() {
@@ -50,5 +52,18 @@ const QString & Todo::getTitle() const {
 
 void Todo::setTitle(const QString &title) {
     Todo::title = title;
+    notify();
+}
+
+QByteArray Todo::serialize() {
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << title << description << done;
+    return data;
+}
+
+void Todo::deserialize(const QByteArray &data) {
+    QDataStream stream(data);
+    stream >> title >> description >> done;
     notify();
 }

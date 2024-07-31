@@ -32,7 +32,7 @@ private:
     TodoList* todoList;
     Controller *controller;
     QWidget *scrollAreaContent;
-    std::list<TodoWidget*> todoWidgets;
+    QList<TodoWidget*> todoWidgets;
 
 
 

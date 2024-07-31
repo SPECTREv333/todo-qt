@@ -7,11 +7,12 @@
 
 
 #include <string>
-#include <list>
+#include <QList>
 #include <qstring.h>
 #include "Subject.h"
+#include "Serializable.h"
 
-class Todo : public Subject {
+class Todo : public Subject, public Serializable {
 public:
     Todo() = default;
 
@@ -37,13 +38,17 @@ public:
 
     void notify() override;
 
+    QByteArray serialize() override;
+
+    void deserialize(const QByteArray& data) override;
+
     bool operator==(const Todo &rhs) const;
 
     bool operator!=(const Todo &rhs) const;
 
 
 private:
-    std::list<Observer *> observers;
+    QList<Observer *> observers;
     QString title;
     QString description;
     bool done = false;

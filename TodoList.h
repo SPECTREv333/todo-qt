@@ -9,17 +9,18 @@
 #include <vector>
 #include <memory>
 #include "Todo.h"
+#include "Serializable.h"
 
-class TodoList : public Subject{
+class TodoList : public Subject, public Serializable {
 public:
 
     void addTodo(std::shared_ptr<Todo> todo);
 
     void removeTodo(std::shared_ptr<Todo> todo);
 
-    const std::list<std::shared_ptr<Todo>> &getTodos() const;
+    const QList<std::shared_ptr<Todo>> &getTodos() const;
 
-    std::list<std::shared_ptr<Todo>> &getTodos();
+    QList<std::shared_ptr<Todo>> &getTodos();
 
     void addObserver(Observer *observer) override;
 
@@ -27,9 +28,13 @@ public:
 
     void notify() override;
 
+    QByteArray serialize() override;
+
+    void deserialize(const QByteArray& data) override;
+
 private:
-    std::list<Observer *> observers;
-    std::list<std::shared_ptr<Todo>> todos;
+    QList<Observer *> observers;
+    QList<std::shared_ptr<Todo>> todos;
 
 };
 
