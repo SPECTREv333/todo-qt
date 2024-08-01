@@ -6,14 +6,13 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-
 find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
         REQUIRED)
 
-add_executable(todo main.cpp
+set(SOURCES
         Todo.cpp
         Todo.h
         TodoList.cpp
@@ -32,9 +31,22 @@ add_executable(todo main.cpp
         MainWindow.cpp
         MainWindow.h
 )
-target_link_libraries(todo
+
+# Application core (includes all classes + Qt)
+add_library(core ${SOURCES})
+
+target_link_libraries(core
         Qt::Core
         Qt::Gui
         Qt::Widgets
 )
+
+# add main and link it against core
+add_executable(todo main.cpp)
+
+target_link_libraries(todo core)
+
+# googletest
+add_subdirectory(test)
+
 
