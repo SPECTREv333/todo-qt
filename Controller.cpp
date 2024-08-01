@@ -5,18 +5,17 @@
 #include "TodoEditDialog.h"
 #include "Controller.h"
 #include <QFile>
+#include <utility>
 
 void Controller::addTodo() {
-
     TodoEditDialog dialog(std::make_shared<Todo>());
     if(dialog.exec() == QDialog::Accepted) {
         todolist->addTodo(dialog.getTodo());
     }
-
 }
 
 void Controller::removeTodo(std::shared_ptr<Todo> todo) {
-    todolist->removeTodo(todo);
+    todolist->removeTodo(std::move(todo)); // avoid copy
 }
 
 void Controller::saveToFile(const QString &path) {
@@ -33,4 +32,9 @@ void Controller::loadFromFile(const QString &path) {
         todolist->deserialize(file.readAll());
         file.close();
     }
+}
+
+void Controller::editTodo(std::shared_ptr<Todo> todo) {
+    TodoEditDialog dialog(std::move(todo)); // avoid copy
+    dialog.exec();
 }

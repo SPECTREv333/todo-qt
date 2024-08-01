@@ -18,14 +18,17 @@ MainWindow::MainWindow(TodoList *todolist, Controller *controller, QWidget *pare
     auto saveAction = fileMenu->addAction("Save");
     auto saveAsAction = fileMenu->addAction("Save As");
     auto loadAction = fileMenu->addAction("Load");
+    auto exitAction = fileMenu->addAction("Exit");
 
     saveAction->setShortcut(QKeySequence::Save);
     saveAsAction->setShortcut(QKeySequence::SaveAs);
     loadAction->setShortcut(QKeySequence::Open);
+    exitAction->setShortcut(QKeySequence::Quit);
 
     connect(saveAction, &QAction::triggered, this, &MainWindow::save);
     connect(loadAction, &QAction::triggered, this, &MainWindow::load);
     connect(saveAsAction, &QAction::triggered, this, &MainWindow::saveAs);
+    connect(exitAction, &QAction::triggered, this, &MainWindow::close);
 
     auto editMenu = menuBar()->addMenu("Edit");
     auto addTodoAction = editMenu->addAction("Add Todo");

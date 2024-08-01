@@ -5,7 +5,6 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include "TodoWidget.h"
-#include "TodoEditDialog.h"
 
 TodoWidget::TodoWidget(QWidget *parent, std::shared_ptr<Todo> todo, Controller *controller)
         : QWidget(parent), todo(std::move(todo)), controller(controller) {
@@ -70,7 +69,6 @@ void TodoWidget::update() {
 }
 
 void TodoWidget::editTodo() {
-    TodoEditDialog dialog(todo);
-    dialog.exec();
+    controller->editTodo(todo);
 }
 
