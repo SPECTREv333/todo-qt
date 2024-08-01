@@ -9,19 +9,19 @@
 
 TodoEditDialog::TodoEditDialog(std::shared_ptr<Todo> todo, QWidget *parent)
         : QDialog(parent), todo(todo) {
-    setWindowTitle("Editor dell'attività");
+    setWindowTitle("Todo Editor");
 
     // Creazione dei widget
-    QLabel *titleLabel = new QLabel("Titolo:");
+    QLabel *titleLabel = new QLabel("Title:");
     titleEdit = new QLineEdit(this);
     titleEdit->setText(todo->getTitle());
 
-    QLabel *descriptionLabel = new QLabel("Descrizione:");
+    QLabel *descriptionLabel = new QLabel("Description:");
     descriptionEdit = new QTextEdit(this);
     descriptionEdit->setText(todo->getDescription());
 
     okButton = new QPushButton("OK");
-    cancelButton = new QPushButton("Annulla");
+    cancelButton = new QPushButton("Cancel");
 
     // Layout
     auto *titleLayout = new QHBoxLayout;
@@ -56,7 +56,7 @@ std::shared_ptr<Todo> TodoEditDialog::getTodo() const {
 void TodoEditDialog::accept() {
     if (titleEdit->text().isEmpty()) {
         // Puoi mostrare un messaggio di errore se il titolo è vuoto
-        QMessageBox::warning(this, "Errore", "Il titolo non può essere vuoto!");
+        QMessageBox::warning(this, "Error", "Title cant be empty!");
         return;
     }
 
