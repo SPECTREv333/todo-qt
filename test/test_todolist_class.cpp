@@ -37,3 +37,19 @@ TEST(TodoListTests, serialize_deserialize) {
     EXPECT_EQ(*(originalList.getTodos()[0]), *(newList.getTodos()[0]));
     EXPECT_EQ(*(originalList.getTodos()[1]), *(newList.getTodos()[1]));
 }
+
+TEST(TodoListTests, double_deserialize) {
+    TodoList originalList;
+    originalList.addTodo(std::make_shared<Todo>("Title1", "Description1", false));
+    originalList.addTodo(std::make_shared<Todo>("Title2", "Description2", true));
+
+    QByteArray data = originalList.serialize();
+
+    TodoList newList;
+    newList.deserialize(data);
+    newList.deserialize(data);
+
+    EXPECT_EQ(originalList.getTodos().size(), newList.getTodos().size());
+    EXPECT_EQ(*(originalList.getTodos()[0]), *(newList.getTodos()[0]));
+    EXPECT_EQ(*(originalList.getTodos()[1]), *(newList.getTodos()[1]));
+}
