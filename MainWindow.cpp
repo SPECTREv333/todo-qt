@@ -5,10 +5,15 @@
 #include "MainWindow.h"
 #include <QMenuBar>
 #include <QFileDialog>
+#include <QStatusBar>
 
 MainWindow::MainWindow(TodoList *todolist, Controller *controller, QWidget *parent) {
-    this->controller = controller;
+    MainWindow::controller = controller;
+    MainWindow::todoList = todolist;
+    MainWindow::todoList->addObserver(this);
 
+    setStatusBar(new QStatusBar(this));
+    statusBar()->showMessage("Try creating a new todo (see global menu)");
     todoListWidget = new TodoListWidget(this, todolist, controller);
     setCentralWidget(todoListWidget);
 
@@ -47,27 +52,46 @@ void MainWindow::save() {
     if (currentPath.isEmpty()) {
         saveAs();
     } else {
-        controller->saveToFile(currentPath);
+        if (controller->saveToFile(currentPath))
+            statusBar()->showMessage("Saved.", 1000);
     }
 }
 
 
 void MainWindow::saveAs() {
     auto path = QFileDialog::getSaveFileName(this, "Save Todo List", currentPath, "Todo List (*.todo)");
-    if (!path.isEmpty()) {
-        if (!path.endsWith(".todo")) {
-            path.append(".todo");
-        }
-        controller->saveToFile(path);
+    if (path.isEmpty()) return;
+    if (!path.endsWith(".todo")) {
+        path.append(".todo");
+    }
+    if (controller->saveToFile(path)) {
+        statusBar()->showMessage("Saved.", 1000);
         currentPath = path;
+    } else {
+        statusBar()->showMessage("Error saving file!");
     }
 }
 
 void MainWindow::load() {
     auto path = QFileDialog::getOpenFileName(this, "Load Todo List", currentPath, "Todo List (*.todo)");
-    if (!path.isEmpty()) {
-        controller->loadFromFile(path);
+    if (path.isEmpty()) return;
+    if (controller->loadFromFile(path)){
+        statusBar()->showMessage("Loaded successfully!", 1000);
         currentPath = path;
+    } else {
+        statusBar()->showMessage("Error loading file!");
     }
+
+}
+
+void MainWindow::update() {
+    if (centralWidget() != todoListWidget) {
+        centralWidget()->deleteLater();
+        setCentralWidget(todoListWidget);
+    }
+}
+
+MainWindow::~MainWindow() {
+    todoList->removeObserver(this);
 }
 

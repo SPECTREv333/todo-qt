@@ -20,9 +20,9 @@ public:
 
     void editTodo(std::shared_ptr<Todo> todo);
 
-    void saveToFile(const QString &path);
+    bool saveToFile(const QString &path);
 
-    void loadFromFile(const QString &path);
+    bool loadFromFile(const QString &path);
 
 private:
     TodoList *todolist;

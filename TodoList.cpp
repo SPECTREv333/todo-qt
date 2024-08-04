@@ -50,6 +50,7 @@ QByteArray TodoList::serialize() {
 
 void TodoList::deserialize(const QByteArray &data) {
     QDataStream stream(data);
+    todos.clear();
     while (!stream.atEnd()) {
         QByteArray todoData;
         stream >> todoData;

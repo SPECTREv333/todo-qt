@@ -18,20 +18,24 @@ void Controller::removeTodo(std::shared_ptr<Todo> todo) {
     todolist->removeTodo(std::move(todo)); // avoid copy
 }
 
-void Controller::saveToFile(const QString &path) {
+bool Controller::saveToFile(const QString &path) {
     QFile file(path);
     if(file.open(QIODevice::WriteOnly)) {
         file.write(todolist->serialize());
         file.close();
+        return file.error() == QFileDevice::NoError;
     }
+    return false;
 }
 
-void Controller::loadFromFile(const QString &path) {
+bool Controller::loadFromFile(const QString &path) {
     QFile file(path);
     if(file.open(QIODevice::ReadOnly)) {
         todolist->deserialize(file.readAll());
         file.close();
+        return file.error() == QFileDevice::NoError;
     }
+    return false;
 }
 
 void Controller::editTodo(std::shared_ptr<Todo> todo) {
