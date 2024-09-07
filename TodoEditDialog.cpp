@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QMessageBox>
+#include <QDateTimeEdit>
 #include "TodoEditDialog.h"
 
 TodoEditDialog::TodoEditDialog(std::shared_ptr<Todo> todo, QWidget *parent)
@@ -12,35 +13,63 @@ TodoEditDialog::TodoEditDialog(std::shared_ptr<Todo> todo, QWidget *parent)
     setWindowTitle("Todo Editor");
 
     // Creazione dei widget
-    QLabel *titleLabel = new QLabel("Title:");
+    QLabel *titleLabel = new QLabel("Title:", parent);
     titleEdit = new QLineEdit(this);
     titleEdit->setText(todo->getTitle());
 
-    QLabel *descriptionLabel = new QLabel("Description:");
+    QLabel *descriptionLabel = new QLabel("Description:", this);
     descriptionEdit = new QTextEdit(this);
     descriptionEdit->setText(todo->getDescription());
+
+    QLabel *startEditLabel = new QLabel("Start date:", this);
+    startEdit = new QDateTimeEdit(todo->getStartDate(), this);
+    startEdit->setCalendarPopup(true);
+    startEdit->setDisplayFormat("dd/MM/yyyy hh:mm");
+
+    QLabel *endEditLabel = new QLabel("End date:", this);
+    endEdit = new QDateTimeEdit(todo->getEndDate(), this);
+    endEdit->setCalendarPopup(true);
+    endEdit->setDisplayFormat("dd/MM/yyyy hh:mm");
 
     okButton = new QPushButton("OK");
     cancelButton = new QPushButton("Cancel");
 
+    auto layoutWidget = new QWidget(this);
+    auto mainLayout = new QVBoxLayout(layoutWidget);
+    layoutWidget->setLayout(mainLayout);
+
     // Layout
-    auto *titleLayout = new QHBoxLayout;
-    titleLayout->addWidget(titleLabel);
-    titleLayout->addWidget(titleEdit);
+    auto titleLayoutWidget = new QWidget(layoutWidget);
+    titleLayoutWidget->setLayout(new QHBoxLayout(this));
+    //auto titleLayout = new QHBoxLayout(layoutWidget);
+    titleLayoutWidget->layout()->addWidget(titleLabel);
+    titleLayoutWidget->layout()->addWidget(titleEdit);
 
-    auto *descriptionLayout = new QVBoxLayout;
-    descriptionLayout->addWidget(descriptionLabel);
-    descriptionLayout->addWidget(descriptionEdit);
+    auto descriptionLayoutWidget = new QWidget(layoutWidget);
+    descriptionLayoutWidget->setLayout(new QVBoxLayout(this));
+    descriptionLayoutWidget->layout()->addWidget(descriptionLabel);
+    descriptionLayoutWidget->layout()->addWidget(descriptionEdit);
 
-    auto *buttonsLayout = new QHBoxLayout;
-    buttonsLayout->addStretch(1);
-    buttonsLayout->addWidget(okButton);
-    buttonsLayout->addWidget(cancelButton);
+    auto startDateLayoutWidget = new QWidget(layoutWidget);
+    startDateLayoutWidget->setLayout(new QVBoxLayout(this));
+    startDateLayoutWidget->layout()->addWidget(startEditLabel);
+    startDateLayoutWidget->layout()->addWidget(startEdit);
 
-    auto *mainLayout = new QVBoxLayout;
-    mainLayout->addLayout(titleLayout);
-    mainLayout->addLayout(descriptionLayout);
-    mainLayout->addLayout(buttonsLayout);
+    auto endDateLayoutWidget = new QWidget(layoutWidget);
+    endDateLayoutWidget->setLayout(new QVBoxLayout(this));
+    endDateLayoutWidget->layout()->addWidget(endEditLabel);
+    endDateLayoutWidget->layout()->addWidget(endEdit);
+
+    auto buttonsLayoutWidget = new QWidget(layoutWidget);
+    buttonsLayoutWidget->setLayout(new QHBoxLayout(this));
+    buttonsLayoutWidget->layout()->addWidget(okButton);
+    buttonsLayoutWidget->layout()->addWidget(cancelButton);
+
+    mainLayout->addWidget(titleLayoutWidget);
+    mainLayout->addWidget(startDateLayoutWidget);
+    mainLayout->addWidget(endDateLayoutWidget);
+    mainLayout->addWidget(descriptionLayoutWidget);
+    mainLayout->addWidget(buttonsLayoutWidget);
 
     setLayout(mainLayout);
 
@@ -62,6 +91,8 @@ void TodoEditDialog::accept() {
 
     todo->setTitle(titleEdit->text());
     todo->setDescription(descriptionEdit->toPlainText());
+    todo->setStartDate(startEdit->dateTime());
+    todo->setEndDate(endEdit->dateTime());
 
     QDialog::accept();
 }

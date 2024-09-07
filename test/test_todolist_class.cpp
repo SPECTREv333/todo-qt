@@ -8,8 +8,8 @@
 
 TEST(TodoListTests, add_remove_todo) {
     TodoList todoList;
-    auto todo1 = std::make_shared<Todo>("Title1", "Description1", false);
-    auto todo2 = std::make_shared<Todo>("Title2", "Description2", true);
+    auto todo1 = std::make_shared<Todo>("Title1", "Description1", false, QDateTime(QDate(), QTime()), QDateTime(QDate(), QTime()));
+    auto todo2 = std::make_shared<Todo>("Title2", "Description2", true, QDateTime(QDate(), QTime()), QDateTime(QDate(), QTime()));
 
     todoList.addTodo(todo1);
     todoList.addTodo(todo2);
@@ -25,8 +25,8 @@ TEST(TodoListTests, add_remove_todo) {
 
 TEST(TodoListTests, serialize_deserialize) {
     TodoList originalList;
-    originalList.addTodo(std::make_shared<Todo>("Title1", "Description1", false));
-    originalList.addTodo(std::make_shared<Todo>("Title2", "Description2", true));
+    originalList.addTodo(std::make_shared<Todo>("Title1", "Description1", false, QDateTime(QDate(), QTime()), QDateTime(QDate(), QTime())));
+    originalList.addTodo(std::make_shared<Todo>("Title2", "Description2", true, QDateTime(QDate(), QTime()), QDateTime(QDate(), QTime())));
 
     QByteArray data = originalList.serialize();
 
@@ -40,8 +40,8 @@ TEST(TodoListTests, serialize_deserialize) {
 
 TEST(TodoListTests, double_deserialize) {
     TodoList originalList;
-    originalList.addTodo(std::make_shared<Todo>("Title1", "Description1", false));
-    originalList.addTodo(std::make_shared<Todo>("Title2", "Description2", true));
+    originalList.addTodo(std::make_shared<Todo>("Title1", "Description1", false, QDateTime(QDate(), QTime()), QDateTime(QDate(), QTime())));
+    originalList.addTodo(std::make_shared<Todo>("Title2", "Description2", true, QDateTime(QDate(), QTime()), QDateTime(QDate(), QTime())));
 
     QByteArray data = originalList.serialize();
 

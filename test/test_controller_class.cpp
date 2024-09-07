@@ -6,6 +6,7 @@
 #include <QFile>
 #include "../Todo.h"
 #include "../Controller.h"
+#include <QDateTime>
 #include <memory>
 
 class ControllerTests : public ::testing::Test {
@@ -13,8 +14,8 @@ protected:
     TodoList todoList;
 
     void SetUp() override {
-        auto todo1 = std::make_shared<Todo>("Title1", "Description1", false);
-        auto todo2 = std::make_shared<Todo>("Title2", "Description2", true);
+        auto todo1 = std::make_shared<Todo>("Title1", "Description1", false, QDateTime(QDate(), QTime()), QDateTime(QDate(), QTime()));
+        auto todo2 = std::make_shared<Todo>("Title2", "Description2", true, QDateTime(QDate(), QTime()), QDateTime(QDate(), QTime()));
 
         todoList.addTodo(todo1);
         todoList.addTodo(todo2);

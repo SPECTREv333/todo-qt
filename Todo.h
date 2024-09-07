@@ -5,10 +5,10 @@
 #ifndef TODO_TODO_H
 #define TODO_TODO_H
 
-
 #include <string>
 #include <QList>
-#include <qstring.h>
+#include <QDate>
+#include <QString>
 #include "Subject.h"
 #include "Serializable.h"
 
@@ -16,21 +16,32 @@ class Todo : public Subject, public Serializable {
 public:
     Todo() = default;
 
-    Todo(const Todo &todo) : description(todo.description), done(todo.done) {}
+    Todo(const Todo &todo)
+            : title(todo.title), description(todo.description), done(todo.done),
+              startDate(todo.startDate), endDate(todo.endDate) {}
 
-    Todo(const QString &title, const QString &desc, bool done) : title(title), description(desc), done(done) {}
+    Todo(const QString &title, const QString &desc, bool done, const QDateTime &startDate, const QDateTime &endDate)
+            : title(title), description(desc), done(done), startDate(startDate), endDate(endDate) {}
 
-    const QString & getTitle() const;
+    const QString &getTitle() const;
 
     void setTitle(const QString &title);
 
-    const QString & getDescription() const;
+    const QString &getDescription() const;
 
     void setDescription(const QString &desc);
 
     bool isDone() const;
 
     void setDone(bool done);
+
+    const QDateTime &getStartDate() const;
+
+    void setStartDate(const QDateTime &startDate);
+
+    const QDateTime &getEndDate() const;
+
+    void setEndDate(const QDateTime &endDate);
 
     void addObserver(Observer *observer) override;
 
@@ -40,20 +51,19 @@ public:
 
     QByteArray serialize() override;
 
-    void deserialize(const QByteArray& data) override;
+    void deserialize(const QByteArray &data) override;
 
     bool operator==(const Todo &rhs) const;
 
     bool operator!=(const Todo &rhs) const;
-
 
 private:
     QList<Observer *> observers;
     QString title;
     QString description;
     bool done = false;
-
+    QDateTime startDate;
+    QDateTime endDate;
 };
-
 
 #endif //TODO_TODO_H

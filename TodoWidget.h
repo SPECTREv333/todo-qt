@@ -36,6 +36,7 @@ private:
     std::shared_ptr<Todo> todo;
     Controller *controller;
     QLabel *label;
+    QLabel *startAndEnd;
     QCheckBox *checkBox;
 };
 
