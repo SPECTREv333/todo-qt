@@ -16,11 +16,4 @@ This is a simple Todo application written in C++ using the Qt framework. The app
 - Add, edit, and delete todo items
 - Set start and end dates for todo items
 - Serialize and deserialize todo items
-- Observer pattern for notifying changes
-
-## Requirements
-
-- C++17 or later
-- Qt 5.15 or later
-- CMake 3.10 or later
-- GoogleTest for unit testing
+- Save and restore from disk
