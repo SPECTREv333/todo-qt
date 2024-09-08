@@ -26,11 +26,6 @@ TodoEditDialog::TodoEditDialog(std::shared_ptr<Todo> todo, QWidget *parent)
     startEdit->setCalendarPopup(true);
     startEdit->setDisplayFormat("dd/MM/yyyy hh:mm");
 
-    QLabel *endEditLabel = new QLabel("End date:", this);
-    endEdit = new QDateTimeEdit(todo->getEndDate(), this);
-    endEdit->setCalendarPopup(true);
-    endEdit->setDisplayFormat("dd/MM/yyyy hh:mm");
-
     okButton = new QPushButton("OK");
     cancelButton = new QPushButton("Cancel");
 
@@ -55,11 +50,6 @@ TodoEditDialog::TodoEditDialog(std::shared_ptr<Todo> todo, QWidget *parent)
     startDateLayoutWidget->layout()->addWidget(startEditLabel);
     startDateLayoutWidget->layout()->addWidget(startEdit);
 
-    auto endDateLayoutWidget = new QWidget(layoutWidget);
-    endDateLayoutWidget->setLayout(new QVBoxLayout(this));
-    endDateLayoutWidget->layout()->addWidget(endEditLabel);
-    endDateLayoutWidget->layout()->addWidget(endEdit);
-
     auto buttonsLayoutWidget = new QWidget(layoutWidget);
     buttonsLayoutWidget->setLayout(new QHBoxLayout(this));
     buttonsLayoutWidget->layout()->addWidget(okButton);
@@ -67,7 +57,6 @@ TodoEditDialog::TodoEditDialog(std::shared_ptr<Todo> todo, QWidget *parent)
 
     mainLayout->addWidget(titleLayoutWidget);
     mainLayout->addWidget(startDateLayoutWidget);
-    mainLayout->addWidget(endDateLayoutWidget);
     mainLayout->addWidget(descriptionLayoutWidget);
     mainLayout->addWidget(buttonsLayoutWidget);
 
@@ -92,7 +81,6 @@ void TodoEditDialog::accept() {
     todo->setTitle(titleEdit->text());
     todo->setDescription(descriptionEdit->toPlainText());
     todo->setStartDate(startEdit->dateTime());
-    todo->setEndDate(endEdit->dateTime());
 
     QDialog::accept();
 }

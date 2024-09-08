@@ -49,7 +49,7 @@ void Todo::notify() {
 
 bool Todo::operator==(const Todo &rhs) const {
     return title == rhs.title && description == rhs.description && done == rhs.done &&
-           startDate == rhs.startDate && endDate == rhs.endDate;
+           startDate == rhs.startDate;
 }
 
 bool Todo::operator!=(const Todo &rhs) const {
@@ -59,13 +59,13 @@ bool Todo::operator!=(const Todo &rhs) const {
 QByteArray Todo::serialize() {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
-    stream << title << description << done << startDate << endDate;
+    stream << title << description << done << startDate;
     return data;
 }
 
 void Todo::deserialize(const QByteArray &data) {
     QDataStream stream(data);
-    stream >> title >> description >> done >> startDate >> endDate;
+    stream >> title >> description >> done >> startDate;
     notify();
 }
 
@@ -75,14 +75,5 @@ const QDateTime &Todo::getStartDate() const {
 
 void Todo::setStartDate(const QDateTime &startDate) {
     Todo::startDate = startDate;
-    notify();
-}
-
-const QDateTime &Todo::getEndDate() const {
-    return endDate;
-}
-
-void Todo::setEndDate(const QDateTime &endDate) {
-    Todo::endDate = endDate;
     notify();
 }

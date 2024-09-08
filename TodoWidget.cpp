@@ -18,11 +18,11 @@ TodoWidget::TodoWidget(QWidget *parent, std::shared_ptr<Todo> todo, Controller *
     checkBox = new QCheckBox(this);
     checkBox->setChecked(TodoWidget::todo->isDone());
     label = new QLabel(TodoWidget::todo->getTitle(), this);
-    startAndEnd = new QLabel(TodoWidget::todo->getStartDate().toString() + " - " + TodoWidget::todo->getEndDate().toString());
-    startAndEnd->setStyleSheet("QLabel { color: #b5b5b5 }");
+    startDate = new QLabel(TodoWidget::todo->getStartDate().toString());
+    startDate->setStyleSheet("QLabel { color: #b5b5b5 }");
     tickableLabelLayout->addWidget(checkBox);
     tickableLabelLayout->addWidget(label);
-    tickableLabelLayout->addWidget(startAndEnd);
+    tickableLabelLayout->addWidget(startDate);
 
     auto* buttonBar = new QWidget(this);
     auto* buttonBarLayout = new QHBoxLayout(buttonBar);
@@ -69,7 +69,7 @@ void TodoWidget::removeTodo() {
 void TodoWidget::update() {
     label->setText(todo->getTitle());
     checkBox->setChecked(todo->isDone());
-    startAndEnd->setText(TodoWidget::todo->getStartDate().toString() + " - " + TodoWidget::todo->getEndDate().toString());
+    startDate->setText(TodoWidget::todo->getStartDate().toString());
 }
 
 void TodoWidget::editTodo() {

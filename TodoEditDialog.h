@@ -26,7 +26,6 @@ private:
     QLineEdit *titleEdit;
     QTextEdit *descriptionEdit;
     QDateTimeEdit *startEdit;
-    QDateTimeEdit *endEdit;
     QPushButton *okButton;
     QPushButton *cancelButton;
 };

@@ -18,10 +18,10 @@ public:
 
     Todo(const Todo &todo)
             : title(todo.title), description(todo.description), done(todo.done),
-              startDate(todo.startDate), endDate(todo.endDate) {}
+              startDate(todo.startDate) {}
 
-    Todo(const QString &title, const QString &desc, bool done, const QDateTime &startDate, const QDateTime &endDate)
-            : title(title), description(desc), done(done), startDate(startDate), endDate(endDate) {}
+    Todo(const QString &title, const QString &desc, bool done, const QDateTime &startDate)
+            : title(title), description(desc), done(done), startDate(startDate) {}
 
     const QString &getTitle() const;
 
@@ -38,10 +38,6 @@ public:
     const QDateTime &getStartDate() const;
 
     void setStartDate(const QDateTime &startDate);
-
-    const QDateTime &getEndDate() const;
-
-    void setEndDate(const QDateTime &endDate);
 
     void addObserver(Observer *observer) override;
 
@@ -63,7 +59,6 @@ private:
     QString description;
     bool done = false;
     QDateTime startDate;
-    QDateTime endDate;
 };
 
 #endif //TODO_TODO_H
