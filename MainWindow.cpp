@@ -87,7 +87,7 @@ void MainWindow::load() {
 }
 
 void MainWindow::update() {
-
+    statusBar()->showMessage(QString("Todos: %1").arg(todoList->size()), 1000);
 }
 
 MainWindow::~MainWindow() {

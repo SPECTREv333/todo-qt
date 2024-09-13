@@ -12,7 +12,7 @@
 #include "Subject.h"
 #include "Serializable.h"
 
-class Todo : public Subject, public Serializable {
+class Todo : public Serializable {
 public:
     Todo() = default;
 
@@ -39,12 +39,6 @@ public:
 
     void setStartDate(const QDateTime &startDate);
 
-    void addObserver(Observer *observer) override;
-
-    void removeObserver(Observer *observer) override;
-
-    void notify() override;
-
     QByteArray serialize() override;
 
     void deserialize(const QByteArray &data) override;
@@ -54,7 +48,6 @@ public:
     bool operator!=(const Todo &rhs) const;
 
 private:
-    QList<Observer *> observers;
     QString title;
     QString description;
     bool done = false;

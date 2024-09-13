@@ -12,7 +12,7 @@ const QString & Todo::getTitle() const {
 
 void Todo::setTitle(const QString &title) {
     Todo::title = title;
-    notify();
+
 }
 
 const QString & Todo::getDescription() const {
@@ -21,7 +21,7 @@ const QString & Todo::getDescription() const {
 
 void Todo::setDescription(const QString &desc) {
     Todo::description = desc;
-    notify();
+
 }
 
 bool Todo::isDone() const {
@@ -30,21 +30,7 @@ bool Todo::isDone() const {
 
 void Todo::setDone(bool done) {
     Todo::done = done;
-    notify();
-}
 
-void Todo::addObserver(Observer *observer) {
-    observers.push_back(observer);
-}
-
-void Todo::removeObserver(Observer *observer) {
-    observers.removeOne(observer);
-}
-
-void Todo::notify() {
-    for (auto observer : observers) {
-        observer->update();
-    }
 }
 
 bool Todo::operator==(const Todo &rhs) const {
@@ -66,7 +52,7 @@ QByteArray Todo::serialize() {
 void Todo::deserialize(const QByteArray &data) {
     QDataStream stream(data);
     stream >> title >> description >> done >> startDate;
-    notify();
+
 }
 
 const QDateTime &Todo::getStartDate() const {
@@ -75,5 +61,5 @@ const QDateTime &Todo::getStartDate() const {
 
 void Todo::setStartDate(const QDateTime &startDate) {
     Todo::startDate = startDate;
-    notify();
+
 }
