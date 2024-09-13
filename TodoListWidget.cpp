@@ -41,7 +41,8 @@ void TodoListWidget::update() {
     }
     todoWidgets.clear();
 
-    for (const auto& todo : todoList->getTodos()) {
+    for (int i = 0; i<todoList->size(); i++) {
+        auto todo = todoList->getTodo(i);
         auto *todoWidget = new TodoWidget(scrollAreaContent, todo, controller);
         todoWidgets.push_back(todoWidget);
         scrollAreaContent->layout()->addWidget(todoWidget);

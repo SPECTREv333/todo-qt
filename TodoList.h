@@ -18,9 +18,15 @@ public:
 
     void removeTodo(std::shared_ptr<Todo> todo);
 
-    const QList<std::shared_ptr<Todo>> &getTodos() const;
+    void removeTodo(int i);
 
-    QList<std::shared_ptr<Todo>> &getTodos();
+    std::shared_ptr<Todo> getTodo(int i);
+
+    int size();
+
+    int notDoneCount();
+
+    int doneCount();
 
     void addObserver(Observer *observer) override;
 

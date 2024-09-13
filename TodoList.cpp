@@ -7,9 +7,6 @@
 #include <QDataStream>
 #include <QIODevice>
 
-const QList<std::shared_ptr<Todo>> &TodoList::getTodos() const {
-    return todos;
-}
 
 void TodoList::addTodo(std::shared_ptr<Todo> todo) {
     todos.push_back(todo);
@@ -25,7 +22,7 @@ void TodoList::removeObserver(Observer *observer) {
 }
 
 void TodoList::notify() {
-    for (auto observer : observers) {
+    for (auto observer: observers) {
         observer->update();
     }
 }
@@ -35,14 +32,11 @@ void TodoList::removeTodo(std::shared_ptr<Todo> todo) {
     notify();
 }
 
-QList<std::shared_ptr<Todo>> &TodoList::getTodos() {
-    return todos;
-}
 
 QByteArray TodoList::serialize() {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
-    for (const auto &todo : todos) {
+    for (const auto &todo: todos) {
         stream << todo->serialize();
     }
     return data;
@@ -62,3 +56,26 @@ void TodoList::deserialize(const QByteArray &data) {
 
 }
 
+std::shared_ptr<Todo> TodoList::getTodo(int i) {
+    return todos[i];
+}
+
+int TodoList::size() {
+    return todos.size();
+}
+
+int TodoList::doneCount() {
+    int count = 0;
+    for (auto todo: todos) {
+        count += todo->isDone() ? 1 : 0;
+    }
+    return count;
+}
+
+int TodoList::notDoneCount() {
+    return size() - doneCount();
+}
+
+void TodoList::removeTodo(int i) {
+    todos.removeAt(i);
+}

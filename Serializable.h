@@ -9,6 +9,7 @@
 
 class Serializable {
 public:
+    virtual ~Serializable() = default;
     virtual QByteArray serialize() = 0;
     virtual void deserialize(const QByteArray& data) = 0;
 };

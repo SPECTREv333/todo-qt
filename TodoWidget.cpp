@@ -73,6 +73,6 @@ void TodoWidget::update() {
 }
 
 void TodoWidget::editTodo() {
-    controller->editTodo(todo);
+    controller->showEditDialog(todo);
 }
 

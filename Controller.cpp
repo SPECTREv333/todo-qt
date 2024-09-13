@@ -7,11 +7,15 @@
 #include <QFile>
 #include <utility>
 
-void Controller::addTodo() {
+void Controller::showCreationDialog() {
     TodoEditDialog dialog(std::make_shared<Todo>());
     if(dialog.exec() == QDialog::Accepted) {
-        todolist->addTodo(dialog.getTodo());
+        addTodo(dialog.getTodo());
     }
+}
+
+void Controller::addTodo(std::shared_ptr<Todo> todo) {
+    todolist->addTodo(todo);
 }
 
 void Controller::removeTodo(std::shared_ptr<Todo> todo) {
@@ -38,7 +42,7 @@ bool Controller::loadFromFile(const QString &path) {
     return false;
 }
 
-void Controller::editTodo(std::shared_ptr<Todo> todo) {
+void Controller::showEditDialog(std::shared_ptr<Todo> todo) {
     TodoEditDialog dialog(std::move(todo)); // avoid copy
     dialog.exec();
 }

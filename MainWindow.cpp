@@ -45,7 +45,7 @@ MainWindow::MainWindow(TodoList *todolist, Controller *controller, QWidget *pare
 }
 
 void MainWindow::addTodo() {
-    controller->addTodo();
+    controller->showCreationDialog();
 }
 
 void MainWindow::save() {

@@ -14,11 +14,13 @@ public:
 
     explicit Controller(TodoList *todolist) : todolist(todolist) {};
 
-    void addTodo();
+    void showCreationDialog();
+
+    void addTodo(std::shared_ptr<Todo> todo);
 
     void removeTodo(std::shared_ptr<Todo> todo);
 
-    void editTodo(std::shared_ptr<Todo> todo);
+    void showEditDialog(std::shared_ptr<Todo> todo);
 
     bool saveToFile(const QString &path);
 
