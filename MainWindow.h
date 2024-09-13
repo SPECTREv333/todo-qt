@@ -8,8 +8,9 @@
 #include "Controller.h"
 #include "Observer.h"
 #include <QMainWindow>
-#include "TodoListWidget.h"
+#include <QTableView>
 #include "TodoList.h"
+#include "TodoTableView.h"
 
 class MainWindow : public QMainWindow, Observer {
     Q_OBJECT
@@ -28,7 +29,7 @@ public slots:
 
 private:
     Controller *controller;
-    TodoListWidget *todoListWidget;
+    TodoTableView *tableView;
     QString currentPath;
     TodoList *todoList;
 

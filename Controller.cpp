@@ -46,3 +46,7 @@ void Controller::showEditDialog(std::shared_ptr<Todo> todo) {
     TodoEditDialog dialog(std::move(todo)); // avoid copy
     dialog.exec();
 }
+
+void Controller::toggleTodo(std::shared_ptr<Todo> todo) {
+    todo->setDone(!todo->isDone());
+}

@@ -6,6 +6,7 @@
 #include <QMenuBar>
 #include <QFileDialog>
 #include <QStatusBar>
+#include "TodoListQAbstractTableModelAdapter.h"
 
 MainWindow::MainWindow(TodoList *todolist, Controller *controller, QWidget *parent) {
     MainWindow::controller = controller;
@@ -14,8 +15,9 @@ MainWindow::MainWindow(TodoList *todolist, Controller *controller, QWidget *pare
 
     setStatusBar(new QStatusBar(this));
     statusBar()->showMessage("Try creating a new todo (see global menu)");
-    todoListWidget = new TodoListWidget(this, todolist, controller);
-    setCentralWidget(todoListWidget);
+
+    tableView = new TodoTableView(this, todolist, controller);
+    setCentralWidget(tableView);
 
     setGeometry(100, 100, 800, 600);
 
@@ -85,10 +87,7 @@ void MainWindow::load() {
 }
 
 void MainWindow::update() {
-    if (centralWidget() != todoListWidget) {
-        centralWidget()->deleteLater();
-        setCentralWidget(todoListWidget);
-    }
+
 }
 
 MainWindow::~MainWindow() {

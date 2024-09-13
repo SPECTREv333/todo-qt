@@ -19,17 +19,17 @@ set(SOURCES
         TodoList.h
         Observer.h
         Subject.h
-        TodoWidget.cpp
-        TodoWidget.h
         Controller.cpp
         Controller.h
-        TodoListWidget.cpp
-        TodoListWidget.h
         TodoEditDialog.cpp
         TodoEditDialog.h
         Serializable.h
         MainWindow.cpp
         MainWindow.h
+        TodoTableView.h
+        TodoTableView.cpp
+        TodoListQAbstractTableModelAdapter.h
+        TodoListQAbstractTableModelAdapter.cpp
 )
 
 # Application core (includes all classes + Qt)

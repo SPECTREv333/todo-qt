@@ -3,8 +3,6 @@
 #include <QMainWindow>
 #include "TodoList.h"
 #include "Controller.h"
-#include "TodoWidget.h"
-#include "TodoListWidget.h"
 #include "Todo.h"
 #include <memory>
 #include <iostream>

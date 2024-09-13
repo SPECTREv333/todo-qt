@@ -57,3 +57,13 @@ TEST_F(ControllerTests, remove_todo) {
     EXPECT_EQ(todoList.size(), 1);
     EXPECT_NE(*(todoList.getTodo(0)), *todoToRemove);
 }
+
+TEST_F(ControllerTests, toggle_todo) {
+    Controller controller(&todoList);
+    auto todoToToggle = todoList.getTodo(0);
+    controller.toggleTodo(todoToToggle);
+
+    EXPECT_TRUE(todoToToggle->isDone());
+    controller.toggleTodo(todoToToggle);
+    EXPECT_FALSE(todoToToggle->isDone());
+}

@@ -20,6 +20,8 @@ public:
 
     void removeTodo(std::shared_ptr<Todo> todo);
 
+    void toggleTodo(std::shared_ptr<Todo> todo);
+
     void showEditDialog(std::shared_ptr<Todo> todo);
 
     bool saveToFile(const QString &path);
@@ -28,6 +30,7 @@ public:
 
 private:
     TodoList *todolist;
+
 
 };
 
