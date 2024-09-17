@@ -54,22 +54,19 @@ void TodoTableView::showContextMenu(const QPoint &pos) {
 
 void TodoTableView::removeTodo() {
     if (currentIndex.isValid()) {
-        auto todo = todoList->getTodo(currentIndex.row());
-        controller->removeTodo(todo);
+        controller->removeTodo(currentIndex.row());
     }
 }
 
 void TodoTableView::editTodo() {
     if (currentIndex.isValid()) {
-        auto todo = todoList->getTodo(currentIndex.row());
-        controller->showEditDialog(todo);
+        controller->showEditDialog(currentIndex.row());
     }
 }
 
 void TodoTableView::toggleTodo() {
     if (currentIndex.isValid()) {
-        auto todo = todoList->getTodo(currentIndex.row());
-        controller->toggleTodo(todo);
+        controller->toggleTodo(currentIndex.row());
     }
 }
 

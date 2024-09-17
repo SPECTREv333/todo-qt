@@ -26,11 +26,11 @@ QVariant TodoListQAbstractTableModelAdapter::data(const QModelIndex &index, int 
     auto todo = todoList->getTodo(index.row());
     switch (index.column()) {
         case 0:
-            return todo->getTitle();
+            return todo.getTitle();
         case 1:
-            return todo->getStartDate();
+            return todo.getStartDate();
         case 2:
-            return todo->isDone() ? "Done" : "Not Done";
+            return todo.isDone() ? "Done" : "Not Done";
         default:
             return QVariant();
     }

@@ -14,13 +14,17 @@
 class TodoList : public Subject, public Serializable {
 public:
 
-    void addTodo(std::shared_ptr<Todo> todo);
+    void addTodo(Todo todo);
 
-    void removeTodo(std::shared_ptr<Todo> todo);
+    void removeTodo(Todo& todo);
 
     void removeTodo(int i);
 
-    std::shared_ptr<Todo> getTodo(int i);
+    const Todo& getTodo(int i);
+
+    void setTodo(int i, const Todo& todo);
+
+    void toggleDone(int i);
 
     int size();
 
@@ -40,7 +44,7 @@ public:
 
 private:
     QList<Observer *> observers;
-    QList<std::shared_ptr<Todo>> todos;
+    QList<Todo> todos;
 
 };
 

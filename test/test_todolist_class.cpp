@@ -8,8 +8,8 @@
 
 TEST(TodoListTests, add_remove_todo) {
     TodoList todoList;
-    auto todo1 = std::make_shared<Todo>("Title1", "Description1", false, QDateTime(QDate(), QTime()));
-    auto todo2 = std::make_shared<Todo>("Title2", "Description2", true, QDateTime(QDate(), QTime()));
+    auto todo1 = Todo("Title1", "Description1", false, QDateTime(QDate(), QTime()));
+    auto todo2 = Todo("Title2", "Description2", true, QDateTime(QDate(), QTime()));
 
     todoList.addTodo(todo1);
     todoList.addTodo(todo2);
@@ -23,10 +23,34 @@ TEST(TodoListTests, add_remove_todo) {
     EXPECT_EQ(todoList.size(), 0);
 }
 
+TEST(TodoListTests, remove_todo_not_in_list) {
+    TodoList todoList;
+    auto todo1 = Todo("Title1", "Description1", false, QDateTime(QDate(), QTime()));
+    auto todo2 = Todo("Title2", "Description2", true, QDateTime(QDate(), QTime()));
+
+    todoList.addTodo(todo1);
+
+    todoList.removeTodo(todo2);
+    EXPECT_EQ(todoList.size(), 1);
+}
+
+TEST(TodoListTests, remove_a_copy) {
+    TodoList todoList;
+    auto todo1 = Todo("Title1", "Description1", false, QDateTime(QDate(), QTime()));
+    auto todo2 = Todo("Title2", "Description2", true, QDateTime(QDate(), QTime()));
+
+    todoList.addTodo(todo1);
+    todoList.addTodo(todo2);
+
+    auto todo1Copy = Todo(todo1);
+    todoList.removeTodo(todo1Copy);
+    EXPECT_EQ(todoList.size(), 1);
+}
+
 TEST(TodoListTests, serialize_deserialize) {
     TodoList originalList;
-    originalList.addTodo(std::make_shared<Todo>("Title1", "Description1", false, QDateTime(QDate(), QTime())));
-    originalList.addTodo(std::make_shared<Todo>("Title2", "Description2", true, QDateTime(QDate(), QTime())));
+    originalList.addTodo(Todo("Title1", "Description1", false, QDateTime(QDate(), QTime())));
+    originalList.addTodo(Todo("Title2", "Description2", true, QDateTime(QDate(), QTime())));
 
     QByteArray data = originalList.serialize();
 
@@ -34,14 +58,14 @@ TEST(TodoListTests, serialize_deserialize) {
     newList.deserialize(data);
 
     EXPECT_EQ(originalList.size(), newList.size());
-    EXPECT_EQ(*(originalList.getTodo(0)), *(newList.getTodo(0)));
-    EXPECT_EQ(*(originalList.getTodo(1)), *(newList.getTodo(1)));
+    EXPECT_EQ(originalList.getTodo(0), newList.getTodo(0));
+    EXPECT_EQ(originalList.getTodo(1), newList.getTodo(1));
 }
 
 TEST(TodoListTests, double_deserialize) {
     TodoList originalList;
-    originalList.addTodo(std::make_shared<Todo>("Title1", "Description1", false, QDateTime(QDate(), QTime())));
-    originalList.addTodo(std::make_shared<Todo>("Title2", "Description2", true, QDateTime(QDate(), QTime())));
+    originalList.addTodo(Todo("Title1", "Description1", false, QDateTime(QDate(), QTime())));
+    originalList.addTodo(Todo("Title2", "Description2", true, QDateTime(QDate(), QTime())));
 
     QByteArray data = originalList.serialize();
 
@@ -50,6 +74,6 @@ TEST(TodoListTests, double_deserialize) {
     newList.deserialize(data);
 
     EXPECT_EQ(originalList.size(), newList.size());
-    EXPECT_EQ(*(originalList.getTodo(0)), *(newList.getTodo(0)));
-    EXPECT_EQ(*(originalList.getTodo(1)), *(newList.getTodo(1)));
+    EXPECT_EQ(originalList.getTodo(0), newList.getTodo(0));
+    EXPECT_EQ(originalList.getTodo(1), newList.getTodo(1));
 }

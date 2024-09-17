@@ -8,7 +8,7 @@
 #include <QIODevice>
 
 
-void TodoList::addTodo(std::shared_ptr<Todo> todo) {
+void TodoList::addTodo(Todo todo) {
     todos.push_back(todo);
     notify();
 }
@@ -27,7 +27,7 @@ void TodoList::notify() {
     }
 }
 
-void TodoList::removeTodo(std::shared_ptr<Todo> todo) {
+void TodoList::removeTodo(Todo& todo) {
     todos.removeOne(todo);
     notify();
 }
@@ -36,8 +36,8 @@ void TodoList::removeTodo(std::shared_ptr<Todo> todo) {
 QByteArray TodoList::serialize() {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
-    for (const auto &todo: todos) {
-        stream << todo->serialize();
+    for (auto &todo: todos) {
+        stream << todo.serialize();
     }
     return data;
 }
@@ -48,15 +48,15 @@ void TodoList::deserialize(const QByteArray &data) {
     while (!stream.atEnd()) {
         QByteArray todoData;
         stream >> todoData;
-        auto todo = std::make_shared<Todo>();
-        todo->deserialize(todoData);
+        Todo todo;
+        todo.deserialize(todoData);
         todos.push_back(todo);
     }
     notify();
 
 }
 
-std::shared_ptr<Todo> TodoList::getTodo(int i) {
+const Todo& TodoList::getTodo(int i) {
     return todos[i];
 }
 
@@ -67,7 +67,7 @@ int TodoList::size() {
 int TodoList::doneCount() {
     int count = 0;
     for (auto todo: todos) {
-        count += todo->isDone() ? 1 : 0;
+        count += todo.isDone() ? 1 : 0;
     }
     return count;
 }
@@ -78,4 +78,14 @@ int TodoList::notDoneCount() {
 
 void TodoList::removeTodo(int i) {
     todos.removeAt(i);
+}
+
+void TodoList::toggleDone(int i) {
+    todos[i].setDone(!todos[i].isDone());
+    notify();
+}
+
+void TodoList::setTodo(int i, const Todo &todo) {
+    todos[i] = todo;
+    notify();
 }

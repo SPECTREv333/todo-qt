@@ -8,18 +8,19 @@
 #include <utility>
 
 void Controller::showCreationDialog() {
-    TodoEditDialog dialog(std::make_shared<Todo>());
+    Todo newTodo; // TODO: refactor gui classes to build ui in a separate class
+    TodoEditDialog dialog(newTodo);
     if(dialog.exec() == QDialog::Accepted) {
         addTodo(dialog.getTodo());
     }
 }
 
-void Controller::addTodo(std::shared_ptr<Todo> todo) {
+void Controller::addTodo(Todo& todo) {
     todolist->addTodo(todo);
 }
 
-void Controller::removeTodo(std::shared_ptr<Todo> todo) {
-    todolist->removeTodo(std::move(todo)); // avoid copy
+void Controller::removeTodo(int i) {
+    todolist->removeTodo(i); // avoid copy
 }
 
 bool Controller::saveToFile(const QString &path) {
@@ -42,11 +43,13 @@ bool Controller::loadFromFile(const QString &path) {
     return false;
 }
 
-void Controller::showEditDialog(std::shared_ptr<Todo> todo) {
-    TodoEditDialog dialog(std::move(todo)); // avoid copy
+void Controller::showEditDialog(int i) {
+    Todo newTodo(todolist->getTodo(i));
+    TodoEditDialog dialog(newTodo);
     dialog.exec();
+    todolist->setTodo(i, newTodo);
 }
 
-void Controller::toggleTodo(std::shared_ptr<Todo> todo) {
-    todo->setDone(!todo->isDone());
+void Controller::toggleTodo(int i) {
+    todolist->toggleDone(i);
 }

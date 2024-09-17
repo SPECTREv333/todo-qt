@@ -14,15 +14,15 @@
 class TodoEditDialog : public QDialog {
     Q_OBJECT
 public:
-    TodoEditDialog(std::shared_ptr<Todo> todo, QWidget *parent = nullptr);
+    explicit TodoEditDialog(Todo& todo, QWidget *parent = nullptr);
 
-    std::shared_ptr<Todo> getTodo() const;
+    Todo& getTodo() const;
 
 private slots:
     void accept() override;
 
 private:
-    std::shared_ptr<Todo> todo;
+    Todo& todo;
     QLineEdit *titleEdit;
     QTextEdit *descriptionEdit;
     QDateTimeEdit *startEdit;

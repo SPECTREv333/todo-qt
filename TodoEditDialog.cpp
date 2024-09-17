@@ -8,21 +8,21 @@
 #include <QDateTimeEdit>
 #include "TodoEditDialog.h"
 
-TodoEditDialog::TodoEditDialog(std::shared_ptr<Todo> todo, QWidget *parent)
+TodoEditDialog::TodoEditDialog(Todo& todo, QWidget *parent) // TODO: extract gui creation to a separate class
         : QDialog(parent), todo(todo) {
     setWindowTitle("Todo Editor");
 
     // Creazione dei widget
     QLabel *titleLabel = new QLabel("Title:", parent);
     titleEdit = new QLineEdit(this);
-    titleEdit->setText(todo->getTitle());
+    titleEdit->setText(todo.getTitle());
 
     QLabel *descriptionLabel = new QLabel("Description:", this);
     descriptionEdit = new QTextEdit(this);
-    descriptionEdit->setText(todo->getDescription());
+    descriptionEdit->setText(todo.getDescription());
 
     QLabel *startEditLabel = new QLabel("Start date:", this);
-    startEdit = new QDateTimeEdit(todo->getStartDate(), this);
+    startEdit = new QDateTimeEdit(todo.getStartDate(), this);
     startEdit->setCalendarPopup(true);
     startEdit->setDisplayFormat("dd/MM/yyyy hh:mm");
 
@@ -67,7 +67,7 @@ TodoEditDialog::TodoEditDialog(std::shared_ptr<Todo> todo, QWidget *parent)
     connect(cancelButton, &QPushButton::clicked, this, &TodoEditDialog::reject);
 }
 
-std::shared_ptr<Todo> TodoEditDialog::getTodo() const {
+Todo& TodoEditDialog::getTodo() const {
     return todo;
 }
 
@@ -78,9 +78,9 @@ void TodoEditDialog::accept() {
         return;
     }
 
-    todo->setTitle(titleEdit->text());
-    todo->setDescription(descriptionEdit->toPlainText());
-    todo->setStartDate(startEdit->dateTime());
+    todo.setTitle(titleEdit->text());
+    todo.setDescription(descriptionEdit->toPlainText());
+    todo.setStartDate(startEdit->dateTime());
 
     QDialog::accept();
 }

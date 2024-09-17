@@ -16,13 +16,13 @@ public:
 
     void showCreationDialog();
 
-    void addTodo(std::shared_ptr<Todo> todo);
+    void addTodo(Todo& todo);
 
-    void removeTodo(std::shared_ptr<Todo> todo);
+    void removeTodo(int i);
 
-    void toggleTodo(std::shared_ptr<Todo> todo);
+    void toggleTodo(int i);
 
-    void showEditDialog(std::shared_ptr<Todo> todo);
+    void showEditDialog(int i);
 
     bool saveToFile(const QString &path);
 
