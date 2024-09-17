@@ -8,7 +8,7 @@
 #include <utility>
 
 void Controller::showCreationDialog() {
-    Todo newTodo; // TODO: refactor gui classes to build ui in a separate class
+    Todo newTodo;
     TodoEditDialog dialog(newTodo);
     if(dialog.exec() == QDialog::Accepted) {
         addTodo(dialog.getTodo());

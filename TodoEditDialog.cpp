@@ -8,7 +8,7 @@
 #include <QDateTimeEdit>
 #include "TodoEditDialog.h"
 
-TodoEditDialog::TodoEditDialog(Todo& todo, QWidget *parent) // TODO: extract gui creation to a separate class
+TodoEditDialog::TodoEditDialog(Todo& todo, QWidget *parent)
         : QDialog(parent), todo(todo) {
     setWindowTitle("Todo Editor");
 

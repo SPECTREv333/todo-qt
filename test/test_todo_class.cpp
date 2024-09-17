@@ -44,3 +44,17 @@ TEST(TodoClassTest, todo_serialization) {
     EXPECT_EQ(todo.getDescription(), deserializedTodo.getDescription());
     EXPECT_EQ(todo.isDone(), deserializedTodo.isDone());
 }
+
+TEST(TodoClassTest, todo_set_title) {
+    Todo todo;
+    QString title = "New Title";
+    todo.setTitle(title);
+    EXPECT_EQ(todo.getTitle(), title);
+}
+
+TEST(TodoClassTest, todo_set_start_date) {
+    Todo todo;
+    QDateTime startDate = QDateTime::currentDateTime();
+    todo.setStartDate(startDate);
+    EXPECT_EQ(todo.getStartDate(), startDate);
+}
