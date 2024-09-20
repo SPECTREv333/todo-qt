@@ -14,6 +14,6 @@ This is a simple Todo application written in C++ using the Qt framework. The app
 ## Features
 
 - Add, edit, and delete todo items
-- Set start and end dates for todo items
+- Set start dates for todo items
 - Serialize and deserialize todo items
 - Save and restore from disk
