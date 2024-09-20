@@ -39,7 +39,7 @@ public:
 
     void setStartDate(const QDateTime &startDate);
 
-    QByteArray serialize() override;
+    QByteArray serialize() const override;
 
     void deserialize(const QByteArray &data) override;
 

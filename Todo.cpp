@@ -42,7 +42,7 @@ bool Todo::operator!=(const Todo &rhs) const {
     return !(rhs == *this);
 }
 
-QByteArray Todo::serialize() {
+QByteArray Todo::serialize() const {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << title << description << done << startDate;

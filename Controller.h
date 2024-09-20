@@ -24,7 +24,7 @@ public:
 
     void showEditDialog(int i);
 
-    bool saveToFile(const QString &path);
+    bool saveToFile(const QString &path) const;
 
     bool loadFromFile(const QString &path);
 

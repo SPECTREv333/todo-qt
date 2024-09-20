@@ -8,7 +8,7 @@
 #include <QIODevice>
 
 
-void TodoList::addTodo(Todo todo) {
+void TodoList::addTodo(const Todo& todo) {
     todos.push_back(todo);
     notify();
 }
@@ -33,7 +33,7 @@ void TodoList::removeTodo(Todo& todo) {
 }
 
 
-QByteArray TodoList::serialize() {
+QByteArray TodoList::serialize() const {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     for (auto &todo: todos) {
@@ -56,15 +56,15 @@ void TodoList::deserialize(const QByteArray &data) {
 
 }
 
-const Todo& TodoList::getTodo(int i) {
+const Todo& TodoList::getTodo(int i) const {
     return todos[i];
 }
 
-int TodoList::size() {
+int TodoList::size() const {
     return todos.size();
 }
 
-int TodoList::doneCount() {
+int TodoList::doneCount() const {
     int count = 0;
     for (auto todo: todos) {
         count += todo.isDone() ? 1 : 0;
@@ -72,7 +72,7 @@ int TodoList::doneCount() {
     return count;
 }
 
-int TodoList::notDoneCount() {
+int TodoList::notDoneCount() const {
     return size() - doneCount();
 }
 

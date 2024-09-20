@@ -14,23 +14,23 @@
 class TodoList : public Subject, public Serializable {
 public:
 
-    void addTodo(Todo todo);
+    void addTodo(const Todo& todo);
 
     void removeTodo(Todo& todo);
 
     void removeTodo(int i);
 
-    const Todo& getTodo(int i);
+    const Todo& getTodo(int i) const;
 
     void setTodo(int i, const Todo& todo);
 
     void toggleDone(int i);
 
-    int size();
+    int size() const;
 
-    int notDoneCount();
+    int notDoneCount() const;
 
-    int doneCount();
+    int doneCount() const;
 
     void addObserver(Observer *observer) override;
 
@@ -38,7 +38,7 @@ public:
 
     void notify() override;
 
-    QByteArray serialize() override;
+    QByteArray serialize() const override;
 
     void deserialize(const QByteArray& data) override;
 

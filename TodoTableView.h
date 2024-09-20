@@ -18,7 +18,7 @@ Q_OBJECT
 public:
     TodoTableView(QWidget *parent, TodoList *todoList, Controller *controller);
     ~TodoTableView();
-    void update();
+    void update() override;
 
 private slots:
     void showContextMenu(const QPoint &pos);

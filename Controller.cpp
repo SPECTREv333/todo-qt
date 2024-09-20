@@ -23,7 +23,7 @@ void Controller::removeTodo(int i) {
     todolist->removeTodo(i); // avoid copy
 }
 
-bool Controller::saveToFile(const QString &path) {
+bool Controller::saveToFile(const QString &path) const {
     QFile file(path);
     if(file.open(QIODevice::WriteOnly)) {
         file.write(todolist->serialize());
